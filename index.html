@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#10100f" />
+    <meta name="application-name" content="AI服装店开店设计预案生成器" />
+    <title>AI服装店开店设计预案生成器</title>
+    <link rel="manifest" href="./app.webmanifest" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <button class="icon-button" id="backButton" aria-label="返回上一步" title="返回上一步">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 18l-6-6 6-6" /></svg>
+        </button>
+        <div>
+          <p class="eyebrow">SNVA PRE-DESIGN AI</p>
+          <h1>服装店开店设计预案</h1>
+        </div>
+        <div class="topbar-spacer" aria-hidden="true"></div>
+      </header>
+
+      <main>
+        <section class="screen is-active" id="screenStart">
+          <div class="hero-panel">
+            <div class="hero-media" aria-hidden="true">
+              <div class="store-scene">
+                <div class="ceiling"></div>
+                <div class="track track-a"></div>
+                <div class="track track-b"></div>
+                <div class="spot s1"></div>
+                <div class="spot s2"></div>
+                <div class="spot s3"></div>
+                <div class="wall left"></div>
+                <div class="wall right"></div>
+                <div class="rack rack-a"></div>
+                <div class="rack rack-b"></div>
+                <div class="counter"></div>
+                <div class="floor-line f1"></div>
+                <div class="floor-line f2"></div>
+              </div>
+            </div>
+            <div class="hero-copy">
+              <p class="tag">开店前 60 秒自测</p>
+              <h2>先让 AI 看看你的店，会不会好看但不卖货。</h2>
+              <p>输入面积、风格、预算和当前阶段，生成一份给设计师沟通用的开店预案，并提前检查灯光预留风险。</p>
+            </div>
+            <div class="metric-strip">
+              <div><strong>7</strong><span>项风险评分</span></div>
+              <div><strong>30s</strong><span>生成预案</span></div>
+              <div><strong>1份</strong><span>灯光前置清单</span></div>
+            </div>
+            <button class="primary-button" id="startButton">
+              开始生成
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </button>
+          </div>
+
+          <div class="insight-card">
+            <span>核心提醒</span>
+            <p>服装店设计不能等装修完再想灯光。灯光要在平面图、吊顶图、回路图阶段一起定。</p>
+          </div>
+        </section>
+
+        <section class="screen" id="screenForm">
+          <div class="progress">
+            <div><span id="stepLabel">01</span><small>/ 04</small></div>
+            <div class="progress-track"><i id="progressBar"></i></div>
+          </div>
+
+          <form id="designForm" class="form-card">
+            <fieldset class="form-step is-active" data-step="0">
+              <legend>你的店现在到哪一步了？</legend>
+              <label>
+                店铺阶段
+                <select name="stage" required>
+                  <option value="刚选址">刚选址，还没找设计师</option>
+                  <option value="找设计师">正在找装修设计师</option>
+                  <option value="已有平面图">已有平面图/效果图</option>
+                  <option value="施工图阶段">已有施工图，准备开工</option>
+                  <option value="已开工">已经开工，需要补救</option>
+                </select>
+              </label>
+              <label>
+                新店还是改造
+                <select name="projectType" required>
+                  <option value="新店装修">新店装修</option>
+                  <option value="老店改造">老店改造</option>
+                  <option value="连锁复制">连锁复制/标准化升级</option>
+                </select>
+              </label>
+              <label>
+                城市
+                <input name="city" placeholder="例如：广州 / 成都 / 杭州" required />
+              </label>
+              <label>
+                是否已有图纸
+                <select name="hasPlan" required>
+                  <option value="没有图纸">没有图纸</option>
+                  <option value="有平面图">有平面图</option>
+                  <option value="有效果图">有效果图</option>
+                  <option value="有施工图">有施工图</option>
+                </select>
+              </label>
+            </fieldset>
+
+            <fieldset class="form-step" data-step="1">
+              <legend>店铺基础信息</legend>
+              <label>
+                面积
+                <select name="area" required>
+                  <option value="50㎡以下">50㎡以下</option>
+                  <option value="50-100㎡">50-100㎡</option>
+                  <option value="100-200㎡">100-200㎡</option>
+                  <option value="200㎡以上">200㎡以上</option>
+                </select>
+              </label>
+              <label>
+                店铺类型
+                <select name="category" required>
+                  <option value="女装店">女装店</option>
+                  <option value="男装店">男装店</option>
+                  <option value="童装店">童装店</option>
+                  <option value="设计师买手店">设计师买手店</option>
+                  <option value="集合店">集合店</option>
+                  <option value="品牌专卖店">品牌专卖店</option>
+                  <option value="全国连锁">全国连锁</option>
+                </select>
+              </label>
+              <label>
+                店铺位置
+                <select name="storeLocation" required>
+                  <option value="商场店">商场店</option>
+                  <option value="社区店">社区店</option>
+                  <option value="商业街店">商业街店</option>
+                </select>
+              </label>
+              <label>
+                客单价
+                <select name="price" required>
+                  <option value="300元以下">300元以下</option>
+                  <option value="300-800元">300-800元</option>
+                  <option value="800-1500元">800-1500元</option>
+                  <option value="1500元以上">1500元以上</option>
+                </select>
+              </label>
+              <label>
+                装修预算
+                <select name="budget" required>
+                  <option value="10万以下">10万以下</option>
+                  <option value="10-30万">10-30万</option>
+                  <option value="30-80万">30-80万</option>
+                  <option value="80万以上">80万以上</option>
+                </select>
+              </label>
+            </fieldset>
+
+            <fieldset class="form-step" data-step="2">
+              <legend>想做成什么感觉？</legend>
+              <label>
+                风格定位
+                <select name="style" required>
+                  <option value="韩系">韩系</option>
+                  <option value="轻奢">轻奢</option>
+                  <option value="极简">极简</option>
+                  <option value="老钱风">老钱风</option>
+                  <option value="新中式">新中式</option>
+                  <option value="设计师买手店">设计师买手店</option>
+                  <option value="高端运动休闲">高端运动休闲</option>
+                </select>
+              </label>
+              <div class="choice-group">
+                <p>你最在意什么？</p>
+                <label><input type="checkbox" name="goals" value="显高级" checked />显高级</label>
+                <label><input type="checkbox" name="goals" value="试衣显瘦" />试衣显瘦</label>
+                <label><input type="checkbox" name="goals" value="拍照出片" checked />拍照出片</label>
+                <label><input type="checkbox" name="goals" value="提升进店率" />提升进店率</label>
+                <label><input type="checkbox" name="goals" value="连锁可复制" />连锁可复制</label>
+              </div>
+              <label>
+                当前最担心的问题
+                <textarea name="pain" rows="4" placeholder="例如：效果图好看但怕落地翻车、试衣间显黑、预算不够、设计师不懂灯光"></textarea>
+              </label>
+            </fieldset>
+
+            <fieldset class="form-step" data-step="3">
+              <legend>上传资料或备注</legend>
+              <label class="upload-box">
+                <input type="file" name="planFile" accept=".jpg,.jpeg,.png,.pdf,.dwg" />
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12M7 8l5-5 5 5M5 21h14" /></svg>
+                <strong>上传平面图 / 效果图</strong>
+                <span id="fileName">可选，第一版会记录文件名，后续人工复核</span>
+              </label>
+              <label>
+                你希望 AI 特别关注
+                <textarea name="notes" rows="4" placeholder="例如：橱窗吸引路人、试衣间显白、门店灯光统一、控制装修成本"></textarea>
+              </label>
+            </fieldset>
+          </form>
+
+          <div class="step-actions">
+            <button class="secondary-button" id="prevStep">上一步</button>
+            <button class="primary-button" id="nextStep">下一步</button>
+          </div>
+        </section>
+
+        <section class="screen" id="screenReport">
+          <div class="report-head">
+            <p class="eyebrow">AI PRE-DESIGN REPORT</p>
+            <h2 id="reportTitle">你的开店设计预案</h2>
+            <button class="secondary-button compact" id="newReportButton">重新生成</button>
+          </div>
+
+          <div class="score-card">
+            <div class="score-ring">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="50"></circle>
+                <circle id="scoreArc" cx="60" cy="60" r="50"></circle>
+              </svg>
+              <div><strong id="riskScore">72</strong><span>风险分</span></div>
+            </div>
+            <div>
+              <p id="riskLabel">中高风险</p>
+              <h3 id="riskHeadline">现在介入灯光规划，能少走很多弯路。</h3>
+              <small id="riskReason">你的店处在设计阶段，正适合提前确认轨道、开孔、色温和回路。</small>
+            </div>
+          </div>
+
+          <div class="risk-grid" id="riskGrid"></div>
+
+          <article class="report-section">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M7 4v16M17 4v16M4 17h16" /></svg>
+              <h3>开店设计预案</h3>
+            </div>
+            <div id="designPlan" class="copy-block"></div>
+          </article>
+
+          <article class="report-section accent">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h16M8 5l-4 7 4 7M16 5l4 7-4 7" /></svg>
+              <h3>灯光前置建议</h3>
+            </div>
+            <div id="lightingPlan" class="copy-block"></div>
+          </article>
+
+          <article class="report-section">
+            <div class="section-title">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" /></svg>
+              <h3>给设计师的沟通清单</h3>
+            </div>
+            <ul id="designerChecklist" class="checklist"></ul>
+          </article>
+
+          <div class="lead-card">
+            <p class="tag">获取完整版 PDF + 人工复核</p>
+            <h3>如果你已有平面图，我们可以免费帮你看一次灯光预留是否合理。</h3>
+            <div class="lead-form">
+              <input id="leadName" placeholder="你的称呼" />
+              <input id="leadContact" placeholder="微信或手机号" />
+              <button class="primary-button" id="saveLeadButton">获取完整预案</button>
+            </div>
+            <p class="microcopy" id="leadMessage">线索仅保存在当前设备浏览器，方便演示和后续接 CRM。</p>
+          </div>
+        </section>
+
+        <section class="screen" id="screenAdmin" hidden aria-hidden="true">
+          <div class="report-head">
+            <p class="eyebrow">LOCAL LEADS</p>
+            <h2>线索后台</h2>
+            <button class="secondary-button compact" id="closeAdminButton">返回</button>
+          </div>
+          <div class="admin-actions">
+            <button class="secondary-button" id="exportLeadsButton">导出 CSV</button>
+            <button class="secondary-button" id="backupLeadsButton">备份 JSON</button>
+            <button class="danger-button" id="clearLeadsButton">清空线索</button>
+          </div>
+          <div id="leadList" class="lead-list"></div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav">
+        <button data-target="screenStart" class="is-active">首页</button>
+        <button data-target="screenForm">生成</button>
+        <button data-target="screenReport">报告</button>
+      </nav>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
