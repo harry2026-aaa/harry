@@ -1,0 +1,19 @@
+{
+  "name": "AI服装店开店设计预案生成器",
+  "short_name": "开店设计预案",
+  "description": "本地运行的服装店开店设计预案、灯光前置风险测试和线索收集工具。",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10100f",
+  "theme_color": "#10100f",
+  "lang": "zh-CN",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
